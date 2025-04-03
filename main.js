@@ -11,6 +11,14 @@ let stephansdom = {
 // Karte initialisieren
 let map = L.map("map").setView([stephansdom.lat, stephansdom.lng], stephansdom.zoom);
 
+// Overlays definieren
+let overlays = {
+    sights: L.featureGroup().addTo(map),
+    lines: L.featureGroup().addTo(map),
+    stops: L.featureGroup().addTo(map),
+    zones: L.featureGroup().addTo(map),
+};
+
 //Layercontrol 
 L.control.layers({
     "BasemapAT grau": L.tileLayer('https://mapsneu.wien.gv.at/basemap/bmapgrau/normal/google3857/{z}/{y}/{x}.png', {
@@ -38,8 +46,7 @@ async function loadSights(url) {
     L.geoJSON(jsondata, {
         attribution: "Datenquelle: <a href='https://data.wien.gv.at'>Stadt Wien</a>"
     }).addTo(map);
-}
-
+};
 
 // Touristische Kraftfahrlinien Liniennetz 
 async function loadLines(url) {
@@ -50,7 +57,7 @@ async function loadLines(url) {
     L.geoJSON(jsondata, {
         attribution: "Datenquelle: <a href='https://data.wien.gv.at'>Stadt Wien</a>"
     }).addTo(map);
-}
+};
 
 //Touristische Kraftfahrlinien Haltestellen 
 async function loadStops(url) {
@@ -61,7 +68,8 @@ async function loadStops(url) {
     L.geoJSON(jsondata, {
         attribution: "Datenquelle: <a href='https://data.wien.gv.at'>Stadt Wien</a>"
     }).addTo(map);
-}
+};
+
 //Fußgängerzonen
 async function loadZones(url) {
     //console.log(url);
@@ -71,7 +79,7 @@ async function loadZones(url) {
     L.geoJSON(jsondata, {
         attribution: "Datenquelle: <a href='https://data.wien.gv.at'>Stadt Wien</a>"
     }).addTo(map);
-}
+};
 
 //GeoJSON laden und visualisieren 
 loadZones("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:FUSSGEHERZONEOGD&srsName=EPSG:4326&outputFormat=json");

@@ -50,9 +50,9 @@ async function loadSights(url) {
     //console.log(jsondata);
     L.geoJSON(jsondata, {
         attribution: "Datenquelle: <a href='https://data.wien.gv.at'>Stadt Wien</a>",
-        pointToLayer: function(feature, latlng) { 
+        pointToLayer: function (feature, latlng) {
             return L.marker(latlng, {
-                icon: L.icon( {
+                icon: L.icon({
                     iconUrl: "icons/photo.png",
                     iconAnchor: [16, 37],
                     popupAnchor: [0, -37]
@@ -71,7 +71,7 @@ async function loadLines(url) {
     L.geoJSON(jsondata, {
         attribution: "Datenquelle: <a href='https://data.wien.gv.at'>Stadt Wien</a>",
         style: function (feature) {
-           // console.log(feature.properties);
+            // console.log(feature.properties);
             let lineColor;
 
             if (feature.properties.LINE_NAME == "Yellow Line") {
@@ -135,7 +135,33 @@ async function loadHotels(url) {
     let jsondata = await response.json();
     //console.log(jsondata);
     L.geoJSON(jsondata, {
-        attribution: "Datenquelle: <a href='https://data.wien.gv.at'>Stadt Wien</a>"
+        attribution: "Datenquelle: <a href='https://data.wien.gv.at'>Stadt Wien</a>",
+        pointToLayer: function (feature, latlng) {
+            //console.log(feature.properties.KATEGORIE_TXT);
+            let iconName;
+            if (feature.properties.KATEGORIE_TXT == "1*") {
+                iconName = "hotel_1stars.png";
+            } else if (feature.properties.KATEGORIE_TXT == "2*") {
+                iconName = "hotel_2stars.png";
+            } else if (feature.properties.KATEGORIE_TXT == "3*") {
+                iconName = "hotel_3stars.png";
+            } else if (feature.properties.KATEGORIE_TXT == "4*") {
+                iconName = "hotel_4stars.png";
+            } else if (feature.properties.KATEGORIE_TXT == "5*") {
+                iconName = "hotel_5stars.png";
+            } else {
+                iconName = "hotel_0stars.png";
+            }
+           // console.log(iconName); 
+
+            return L.marker(latlng, {
+                icon: L.icon({
+                    iconUrl: `icons/${iconName}`,
+                    iconAnchor: [16, 37],
+                    popupAnchor: [0, -37]
+                })
+            });
+        }
     }).addTo(overlays.hotels);
 };
 

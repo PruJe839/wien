@@ -42,7 +42,7 @@ L.control.scale({
     imperial: false,
 }).addTo(map);
 
-// Sehenswürdigkeiten Standorte Wien
+// Sehenswürdigkeiten Standorte Wien Link für Icons = https://mapicons.mapsmarker.com/markers/media/photo/?custom_color=ffffff
 async function loadSights(url) {
     //console.log(url);
     let response = await fetch(url);
@@ -62,7 +62,7 @@ async function loadLines(url) {
     L.geoJSON(jsondata, {
         attribution: "Datenquelle: <a href='https://data.wien.gv.at'>Stadt Wien</a>",
         style: function (feature) {
-            console.log(feature.properties.LINE_NAME);
+            console.log(feature.properties);
             let lineColor;
 
             if (feature.properties.LINE_NAME == "Yellow Line") {

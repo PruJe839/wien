@@ -64,7 +64,7 @@ async function loadSights(url) {
             });
         },
         onEachFeature: function (feature, layer) {
-            // console.log(feature.properties);
+            //console.log(feature.properties);
             layer.bindPopup(`
                     <img src="${feature.properties.THUMBNAIL}" alt="*">
                     <h4>${feature.properties.NAME}</h4>
@@ -106,8 +106,16 @@ async function loadLines(url) {
             return {
                 color: lineColor
             }
+        },
+        onEachFeature: function (feature, layer) {
+            //console.log(feature.properties);
+            layer.bindPopup(`
+                    <h4>${feature.properties.LINE_NAME}</h4>
+                    <start>${feature.properties.FROM_NAME}</start>
+                    <br><end>${feature.properties.TO_NAME}</end></br>
+                 `);
         }
-    }).addTo(overlays.lines);
+    }).addTo(overlays.sights);
 };
 
 //Touristische Kraftfahrlinien Haltestellen 
@@ -128,10 +136,17 @@ async function loadStops(url) {
                     popupAnchor: [0, -37]
                 })
             });
-
+        },
+        onEachFeature: function (feature, layer) {
+            //console.log(feature.properties);
+            layer.bindPopup(`
+                    <h4>${feature.properties.LINE_NAME}</h4>
+                    <address>${feature.properties.STAT_NAME}</address>
+                 `);
         }
-    }).addTo(overlays.stops);
+    }).addTo(overlays.sights);
 };
+
 
 //Fußgängerzonen
 async function loadZones(url) {
@@ -149,9 +164,19 @@ async function loadZones(url) {
                 opacity: 0.4,
                 fillOpacity: 0.1,
             }
+        },
+        onEachFeature: function (feature, layer) {
+            //console.log(feature.properties);
+            layer.bindPopup(`
+                <address>${feature.properties.ADRESSE}</address>
+                <p>${feature.properties.ZEITRAUM}</p>
+                <text>${feature.properties.AUSN_TEXT}</text>
+            `);
+            
         }
-    }).addTo(overlays.zones);
+    }).addTo(overlays.sights);
 };
+
 
 //Hotels und Unterkünfte 
 async function loadHotels(url) {
@@ -186,9 +211,19 @@ async function loadHotels(url) {
                     popupAnchor: [0, -37]
                 })
             });
+        },
+        onEachFeature: function (feature, layer) {
+            layer.bindPopup(`
+                <b>${feature.properties.BETRIEB}</b> (${feature.properties.KATEGORIE_TXT})<br>
+                <i class="fa-solid fa-location-dot"></i> ${feature.properties.ADRESSE}<br>
+                <i class="fa-solid fa-phone"></i> <a href="tel:${feature.properties.KONTAKT_TEL}">${feature.properties.KONTAKT_TEL}</a><br>
+                <i class="fa-solid fa-envelope"></i> <a href="mailto:${feature.properties.KONTAKT_EMAIL}">${feature.properties.KONTAKT_EMAIL}</a><br>
+                <a href="${feature.properties.WEITERE_INFOS}" target="wien">Homepage</a>
+            `);
         }
     }).addTo(overlays.hotels);
-};
+} 
+        
 
 //GeoJSON laden und visualisieren 
 loadZones("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:FUSSGEHERZONEOGD&srsName=EPSG:4326&outputFormat=json");

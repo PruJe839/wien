@@ -110,12 +110,13 @@ async function loadLines(url) {
         onEachFeature: function (feature, layer) {
             //console.log(feature.properties);
             layer.bindPopup(`
-                    <h4>${feature.properties.LINE_NAME}</h4>
-                    <start>${feature.properties.FROM_NAME}</start>
-                    <br><end>${feature.properties.TO_NAME}</end></br>
+                    <h4> <i class="fa-solid fa-bus"></i> ${feature.properties.LINE_NAME}</h4>
+                    <i class="fa-regular fa-circle-dot"></i> <start>${feature.properties.FROM_NAME}</start> <br>
+                    <i class="fa-solid fa-route"></i> <br> 
+                    <i class="fa-regular fa-circle-dot"></i> <end>${feature.properties.TO_NAME}</end>
                  `);
         }
-    }).addTo(overlays.sights);
+    }).addTo(overlays.lines);
 };
 
 //Touristische Kraftfahrlinien Haltestellen 
@@ -140,11 +141,11 @@ async function loadStops(url) {
         onEachFeature: function (feature, layer) {
             //console.log(feature.properties);
             layer.bindPopup(`
-                    <h4>${feature.properties.LINE_NAME}</h4>
+                    <h4> <i class="fa-solid fa-bus"></i> ${feature.properties.LINE_NAME}</h4>
                     <address>${feature.properties.STAT_NAME}</address>
                  `);
         }
-    }).addTo(overlays.sights);
+    }).addTo(overlays.stops);
 };
 
 
@@ -169,12 +170,12 @@ async function loadZones(url) {
             //console.log(feature.properties);
             layer.bindPopup(`
                 <address>${feature.properties.ADRESSE}</address>
-                <p>${feature.properties.ZEITRAUM}</p>
-                <text>${feature.properties.AUSN_TEXT}</text>
+                <i class="fa-regular fa-clock"></i> <time>${feature.properties.ZEITRAUM}</time> <br> 
+                <i class="fa-solid fa-circle-info"></i> <text>${feature.properties.AUSN_TEXT}</text>
             `);
-            
+
         }
-    }).addTo(overlays.sights);
+    }).addTo(overlays.zones);
 };
 
 
@@ -214,16 +215,18 @@ async function loadHotels(url) {
         },
         onEachFeature: function (feature, layer) {
             layer.bindPopup(`
-                <b>${feature.properties.BETRIEB}</b> (${feature.properties.KATEGORIE_TXT})<br>
+                <h4>${feature.properties.BETRIEB}</h4> 
+                <b> Hotel ${feature.properties.KATEGORIE_TXT}</b> <br> <br>
+                <i class="fa-solid fa-minus"></i> <br> <br>
                 <i class="fa-solid fa-location-dot"></i> ${feature.properties.ADRESSE}<br>
-                <i class="fa-solid fa-phone"></i> <a href="tel:${feature.properties.KONTAKT_TEL}">${feature.properties.KONTAKT_TEL}</a><br>
-                <i class="fa-solid fa-envelope"></i> <a href="mailto:${feature.properties.KONTAKT_EMAIL}">${feature.properties.KONTAKT_EMAIL}</a><br>
+                <i class="fa-solid fa-phone"></i> <a href="tel:">${feature.properties.KONTAKT_TEL}</a><br>
+                <i class="fa-solid fa-envelope"></i> <a href="mailto:">${feature.properties.KONTAKT_EMAIL}</a><br>
                 <a href="${feature.properties.WEITERE_INFOS}" target="wien">Homepage</a>
             `);
         }
     }).addTo(overlays.hotels);
-} 
-        
+}
+
 
 //GeoJSON laden und visualisieren 
 loadZones("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:FUSSGEHERZONEOGD&srsName=EPSG:4326&outputFormat=json");

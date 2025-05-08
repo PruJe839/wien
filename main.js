@@ -142,7 +142,7 @@ async function loadStops(url) {
             //console.log(feature.properties);
             layer.bindPopup(`
                     <h4> <i class="fa-solid fa-bus"></i> ${feature.properties.LINE_NAME}</h4>
-                    <address>${feature.properties.STAT_NAME}</address>
+                    <stop>${feature.properties.OBJECTID}</stop> <address>${feature.properties.STAT_NAME}</address>
                  `);
         }
     }).addTo(overlays.stops);
@@ -169,7 +169,7 @@ async function loadZones(url) {
         onEachFeature: function (feature, layer) {
             //console.log(feature.properties);
             layer.bindPopup(`
-                <address>${feature.properties.ADRESSE}</address>
+                <h4>${feature.properties.ADRESSE}</h4>
                 <i class="fa-regular fa-clock"></i> <time>${feature.properties.ZEITRAUM}</time> <br> 
                 <i class="fa-solid fa-circle-info"></i> <text>${feature.properties.AUSN_TEXT}</text>
             `);
@@ -217,11 +217,11 @@ async function loadHotels(url) {
             layer.bindPopup(`
                 <h4>${feature.properties.BETRIEB}</h4> 
                 <b> Hotel ${feature.properties.KATEGORIE_TXT}</b> <br> <br>
-                <i class="fa-solid fa-minus"></i> <br> <br>
+                <hr> <br> <br>
                 <i class="fa-solid fa-location-dot"></i> ${feature.properties.ADRESSE}<br>
-                <i class="fa-solid fa-phone"></i> <a href="tel:">${feature.properties.KONTAKT_TEL}</a><br>
-                <i class="fa-solid fa-envelope"></i> <a href="mailto:">${feature.properties.KONTAKT_EMAIL}</a><br>
-                <a href="${feature.properties.WEITERE_INFOS}" target="wien">Homepage</a>
+                <i class="fa-solid fa-phone"></i> <a href="tel:${feature.properties.KONTAKT_TEL}">${feature.properties.KONTAKT_TEL}</a><br>
+                <i class="fa-solid fa-envelope"></i> <a href="mailto:${feature.properties.KONTAKT_EMAIL}">${feature.properties.KONTAKT_EMAIL}</a><br>
+                <a href="${feature.properties.WEBLINK1}" target="wien">Homepage</a>
             `);
         }
     }).addTo(overlays.hotels);
